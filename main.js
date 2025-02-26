@@ -28,7 +28,7 @@ form.addEventListener('submit', async (e) => {
         alert(err);
         console.error(err);
     }
-    
+
     hideSpinner();
 });
 
@@ -41,6 +41,6 @@ function showSpinner() {
 function hideSpinner() {
     const button = document.querySelector('button');
     button.disabled = false;
-    button.innerHTML = 'Dream';
+    button.innerHTML = 'GENERATE';
 };
 
