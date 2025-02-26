@@ -16,18 +16,24 @@ app.use(express.json());
 
 app.post('/dream', async (req, res) =>  {
     console.log(`Handling request ${i}..`);
-    const prompt = req.body.prompt;
+    try {
+        const prompt = req.body.prompt;
 
-    const aiResponse = await openai.images.generate({
-        model: "dall-e-3",
-        prompt: prompt,
-        n: 1,
-        size: '1024x1024',
-        quality: "standard",
-    });
+        const aiResponse = await openai.images.generate({
+            model: "dall-e-3",
+            prompt: prompt,
+            n: 1,
+            size: '1024x1024',
+            quality: "standard",
+        });
 
-    const image = aiResponse.data[0].url
-    res.send({ image });
+        const image = aiResponse.data[0].url;
+        res.send({ image });
+    } catch (error) {
+        console.error(error);
+        res.status(500).send(error?.response.data.error.message || 'Something went wrong');
+    }
+    i++;
 });
 
 app.listen(8080, () => console.log('Make art on http://localhost:8080/dream'));
