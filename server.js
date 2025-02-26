@@ -3,6 +3,7 @@ dotenv.config();
 
 import { OpenAI } from 'openai';
 
+let i = 0;
 
 const openai = new OpenAI({apiKey: process.env.OPENAI_API_KEY});
 
@@ -14,16 +15,18 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/dream', async (req, res) =>  {
-
+    console.log(`Handling request ${i}..`);
     const prompt = req.body.prompt;
 
-    const aiResponse = await openai.createImage({
-        prompt,
+    const aiResponse = await openai.images.generate({
+        model: "dall-e-3",
+        prompt: prompt,
         n: 1,
         size: '1024x1024',
+        quality: "standard",
     });
 
-    const image = aiResponse.data.data[0].url;
+    const image = aiResponse.data[0].url
     res.send({ image });
 });
 
