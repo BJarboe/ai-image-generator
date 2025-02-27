@@ -2,8 +2,10 @@ import './style.css';
 
 const form = document.querySelector('form');
 
+const sleep = (delay) => new Promise(resolve => setTimeout(resolve, delay * 1000));
+
 form.addEventListener('submit', async (e) => {
-    showSpinner();
+    enterLoadState();
     e.preventDefault();
     const data = new FormData(form);
 
@@ -29,18 +31,27 @@ form.addEventListener('submit', async (e) => {
         console.error(err);
     }
 
-    hideSpinner();
+    exitLoadState();
 });
 
-function showSpinner() {
+function enterLoadState() {
     const button = document.querySelector('button');
     button.disabled = true;
     button.innerHTML = 'Generating image... <span class="spinner">🌟</span>';
+
+    const placeholder = document.querySelector('#overlay');
+    placeholder.style.display = '';
+    placeholder.innerHTML = '<video height="240"autoplay loop muted>Loading..<source src="media/dope_animation.mp4" type="video/mp4"></video>';
 };
 
-function hideSpinner() {
+async function exitLoadState() {
+    await sleep(3); // Buffer for seemless transition
     const button = document.querySelector('button');
     button.disabled = false;
     button.innerHTML = 'GENERATE';
+
+    const placeholder = document.querySelector('#overlay');
+
+    placeholder.style.display = 'none';
 };
 
