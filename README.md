@@ -23,3 +23,11 @@ This web app allows users to generate images using Dall-E 3. This project showca
 - Git
 - NPM
 - Thunder Client
+
+### Example Usage
+Enter prompt and click generate (button will disable and play a loading animation)
+![Loading](media/loading.png)
+If prompt is valid, result appears on screen
+![Result](media/result.png)
+Invalid prompts will alert the user
+![Error](media/error.png)
